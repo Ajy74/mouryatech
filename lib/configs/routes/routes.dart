@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mourytech/configs/routes/route_name.dart';
+import 'package:mourytech/view/home/home_screen.dart';
 import 'package:mourytech/view/splash/splash_screen.dart';
 
 class AppRoutes{
@@ -13,17 +14,17 @@ class AppRoutes{
         builder: (context, state) => const SplashScreen(),
         routes: [
 
-          // GoRoute(
-          //   name: RouteName.authScreen,
-          //   path: "auth",
-          //   pageBuilder: (context, state) {
-          //      return customPageRouteBuilder(
-          //       const AuthSceen(),
-          //       state.pageKey,
-          //       transitionDuration: const Duration(milliseconds: 500),
-          //     );
-          //   },
-          // ),
+          GoRoute(
+            name: RouteName.homeScreen,
+            path: RouteName.homeScreen,
+            pageBuilder: (context, state) {
+               return customPageRouteBuilderBottomToTop(
+                const HomeScreen(),
+                state.pageKey,
+                transitionDuration: const Duration(milliseconds: 500),
+              );
+            },
+          ),
 
         ]
       )

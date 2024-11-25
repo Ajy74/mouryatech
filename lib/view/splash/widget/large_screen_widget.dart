@@ -1,6 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mourytech/configs/colors/colors.dart';
+import 'package:mourytech/configs/routes/route_name.dart';
 import 'package:mourytech/utils/device_size.dart';
 import 'package:mourytech/view/widget/fade_in_out_widget.dart';
 
@@ -126,6 +128,9 @@ class _LargeScreenWidgetState extends State<LargeScreenWidget> {
                               pause: const Duration(milliseconds: 500),
                               displayFullTextOnTap: true,
                               stopPauseOnTap: true,
+                              onFinished: () {
+                                context.replaceNamed(RouteName.homeScreen);
+                              },
                             ),
                         ),
           
