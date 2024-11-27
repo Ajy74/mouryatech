@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/configs/routes/route_name.dart';
 import 'package:mourytech/utils/device_size.dart';
@@ -85,9 +86,12 @@ class _LargeScreenWidgetState extends State<LargeScreenWidget> {
                           backgroundColor: AppColor.darkColor1,
                           child: Padding(
                             padding: EdgeInsets.all(DeviceSize.width*0.004),
-                            child: CircleAvatar(
-                              radius: DeviceSize.width*0.1,
-                              backgroundImage: const AssetImage("assets/images/ajay.jpg"),
+                            child: Hero(
+                              tag: "ajay",
+                              child: CircleAvatar(
+                                radius: DeviceSize.width*0.1,
+                                backgroundImage: const AssetImage("assets/images/ajay.jpg"),
+                              ),
                             ),
                           ),
                         ),
@@ -113,8 +117,8 @@ class _LargeScreenWidgetState extends State<LargeScreenWidget> {
                           child: AnimatedTextKit(
                               animatedTexts: [
                                 TypewriterAnimatedText(
-                                  'Ajay Mourya',
-                                  textStyle: TextStyle(
+                                  "I'm Ajay Mourya",
+                                  textStyle: GoogleFonts.paprika(
                                     fontSize: DeviceSize.width*0.04,
                                     fontWeight: FontWeight.bold,
                                     color: AppColor.vegasGold

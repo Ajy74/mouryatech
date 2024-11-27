@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mourytech/bloc/theme/theme_cubit.dart';
 import 'package:mourytech/configs/colors/colors.dart';
@@ -8,6 +11,9 @@ import 'package:mourytech/configs/routes/routes.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   
+  // if( !(Platform.isAndroid || Platform.isIOS) ){
+  //   usePathUrlStrategy();
+  // }
   runApp(const MyApp());
 }
 
@@ -56,6 +62,20 @@ ThemeData lightTheme() {
     ),
     useMaterial3: true,
     textTheme: getTextThemes(),
+    scrollbarTheme: ScrollbarThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        // if (states.contains(WidgetState.dragged)) {
+        //   return AppColor.cyan;
+        // }
+        return AppColor.lightPrimaryColor;
+      }),
+      interactive: true,
+      trackVisibility: WidgetStateProperty.all(false),
+      trackColor: WidgetStateProperty.all(AppColor.lightPrimaryColor.withOpacity(0.1)), 
+      trackBorderColor: WidgetStateProperty.all(AppColor.lightPrimaryColor.withOpacity(0.1)),
+      thickness: WidgetStateProperty.all(4), 
+      radius: const Radius.circular(12),
+    )
   );
 }
 
@@ -67,5 +87,19 @@ ThemeData darkTheme() {
     ),
     useMaterial3: true,
     textTheme: getTextThemes(),
+    scrollbarTheme: ScrollbarThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        // if (states.contains(WidgetState.dragged)) {
+        //   return AppColor.cyan;
+        // }
+        return AppColor.darkPrimaryColor;
+      }),
+      interactive: true,
+      trackVisibility: WidgetStateProperty.all(false),
+      trackColor: WidgetStateProperty.all(AppColor.darkPrimaryColor.withOpacity(0.1)), 
+      trackBorderColor: WidgetStateProperty.all(AppColor.darkPrimaryColor.withOpacity(0.1)),
+      thickness: WidgetStateProperty.all(4), 
+      radius: const Radius.circular(12),
+    )
   );
 }
