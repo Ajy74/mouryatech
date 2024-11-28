@@ -123,17 +123,17 @@ class _LargeScreenWidgetState extends State<LargeScreenWidget> {
                                     fontWeight: FontWeight.bold,
                                     color: AppColor.vegasGold
                                   ),
-                                  speed: const Duration(milliseconds: 500),
+                                  speed: const Duration(milliseconds: 300),
                                   cursor: "",
                                   curve: Curves.bounceInOut,
                                 ),
                               ],
                               totalRepeatCount: 1,
-                              pause: const Duration(milliseconds: 500),
+                              pause: const Duration(milliseconds: 300),
                               displayFullTextOnTap: true,
                               stopPauseOnTap: true,
                               onFinished: () {
-                                context.replaceNamed(RouteName.homeScreen);
+                                context.pushReplacementNamed(RouteName.homeScreen);
                               },
                             ),
                         ),
