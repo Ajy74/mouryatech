@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mourytech/bloc/home/home_cubit.dart';
 import 'package:mourytech/bloc/theme/theme_cubit.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/configs/routes/routes.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThemeCubit(),),
+        BlocProvider(create: (context) => HomeCubit(),),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

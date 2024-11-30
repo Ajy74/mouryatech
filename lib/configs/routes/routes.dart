@@ -12,22 +12,32 @@ class AppRoutes{
         path: "/",
         name: RouteName.splashScreen,
         builder: (context, state) => const SplashScreen(),
-        routes: [
+        // routes: [
+        //   GoRoute(
+        //     name: RouteName.homeScreen,
+        //     path: RouteName.homeScreen,
+        //     pageBuilder: (context, state) {
+        //        return customPageRouteBuilderBottomToTop(
+        //         const HomeScreen(),
+        //         state.pageKey,
+        //         transitionDuration: const Duration(milliseconds: 2000),
+        //       );
+        //     },
+        //   ),
+        // ]
+      ),
 
-          GoRoute(
-            name: RouteName.homeScreen,
-            path: RouteName.homeScreen,
-            pageBuilder: (context, state) {
-               return customPageRouteBuilderBottomToTop(
-                const HomeScreen(),
-                state.pageKey,
-                transitionDuration: const Duration(milliseconds: 500),
-              );
-            },
-          ),
-
-        ]
-      )
+      GoRoute(
+        name: RouteName.homeScreen,
+        path: "/${RouteName.homeScreen}",
+        pageBuilder: (context, state) {
+            return customPageRouteBuilderBottomToTop(
+            const HomeScreen(),
+            state.pageKey,
+            transitionDuration: const Duration(milliseconds: 2000),
+          );
+        },
+      ),
     ]
   ); 
 }
