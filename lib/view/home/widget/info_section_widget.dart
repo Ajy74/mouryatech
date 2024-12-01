@@ -5,19 +5,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/components/custom_button.dart';
 import 'package:mourytech/utils/device_size.dart';
+import 'package:mourytech/view/widget/floating_up_down_widget.dart';
 
 class InfoSectionWidget extends StatelessWidget {
   const InfoSectionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: DeviceSize.width,
-      height: DeviceSize.isLargeScreen? DeviceSize.height-(DeviceSize.height/2.2) :DeviceSize.height-(kToolbarHeight + DeviceSize.width*0.04),
-      margin: EdgeInsets.symmetric(
-        horizontal: DeviceSize.width*0.025
+    double minHeight = DeviceSize.isLargeScreen? DeviceSize.height-(DeviceSize.height/2.5) :DeviceSize.height-(kToolbarHeight + DeviceSize.width*0.04);
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: minHeight,
+        maxHeight: DeviceSize.isTablet ? DeviceSize.height + (DeviceSize.height/3) : minHeight
       ),
-      child: DeviceSize.isLargeScreen ? largeScreenContent() : mobileScreenContent(),
+      child: Container(
+        width: DeviceSize.width,
+        // height: minHeight,
+        margin: EdgeInsets.symmetric(
+          horizontal: DeviceSize.width*0.025
+        ),
+        child: DeviceSize.isLargeScreen ? largeScreenContent() : mobileScreenContent(),
+      ),
     );
   }
   
@@ -215,15 +224,68 @@ class InfoSectionWidget extends StatelessWidget {
       children: [
         SizedBox(height: DeviceSize.isLargeScreen ? DeviceSize.width*0.03 : 0,),
 
-        Hero(
-          tag: "ajay",
-          child: CircleAvatar(
-            radius: DeviceSize.isLargeScreen ? DeviceSize.width*0.08 : DeviceSize.width*0.26,
-            backgroundImage: const AssetImage("assets/images/ajay.jpg"),
+        SizedBox(
+          child: Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 15
+                ),
+                child: Hero(
+                  tag: "ajay",
+                  child: CircleAvatar(
+                    radius: DeviceSize.isLargeScreen ? DeviceSize.width*0.08 : DeviceSize.isTablet ? DeviceSize.width*0.22 :DeviceSize.width*0.26,
+                    backgroundImage: const AssetImage("assets/images/ajay.jpg"),
+                  ),
+                ),
+              ),
+
+              Positioned(
+                top: 0,
+                left: 0,
+                child: FloatingUpDownWidget(
+                  offset: 15.0, 
+                  duration: const Duration(seconds: 3),
+                  child: Image(
+                    image: const AssetImage("assets/icons/flutter.png"),
+                    height: DeviceSize.isLargeScreen || DeviceSize.isTablet  ? 40 : 30,
+                  )
+                )
+              ),
+
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: Center(
+                  child: FloatingUpDownWidget(
+                    offset: 15.0, 
+                    duration: const Duration(seconds: 3),
+                    child: Image(
+                      image: const AssetImage("assets/icons/nodejs.png"),
+                      height: DeviceSize.isLargeScreen || DeviceSize.isTablet  ? 40 : 30,
+                    )
+                  ),
+                )
+              ),
+
+              Positioned(
+                top: 25,
+                right: 0,
+                child: FloatingUpDownWidget(
+                  offset: 15.0, 
+                  duration: const Duration(seconds: 3),
+                  child: Image(
+                    image: const AssetImage("assets/icons/kotlin.png"),
+                    height: DeviceSize.isLargeScreen || DeviceSize.isTablet  ? 40 : 30,
+                  )
+                )
+              ),
+            ],
           ),
         ),
 
-        SizedBox(height: DeviceSize.isLargeScreen ? DeviceSize.width*0.03 :DeviceSize.width*0.06,),
+        SizedBox(height: DeviceSize.isLargeScreen ? DeviceSize.width*0.03 :DeviceSize.width*0.07,),
 
         SizedBox(
           width: DeviceSize.width,

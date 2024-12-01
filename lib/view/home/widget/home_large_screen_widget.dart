@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mourytech/bloc/home/home_cubit.dart';
 import 'package:mourytech/utils/device_size.dart';
+import 'package:mourytech/view/home/widget/about_me_section_widget.dart';
 import 'package:mourytech/view/home/widget/info_section_widget.dart';
 import 'package:mourytech/view/home/widget/logo_section_widget.dart';
 
@@ -40,9 +41,11 @@ class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
       fit: StackFit.expand,
       children: [
         ListView(
+          controller: _scrollController,
           children: [
             SizedBox(height: DeviceSize.width*0.04 + MediaQuery.of(context).padding.top + kToolbarHeight,),
-            const InfoSectionWidget()
+            const InfoSectionWidget(),
+            const AboutMeSectionWidget()
           ],
         ),
 

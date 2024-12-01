@@ -26,7 +26,7 @@ class LogoSectionWidget extends StatelessWidget {
         bottom: DeviceSize.isLargeScreen?bodyMarginVertical:bodyMarginVertical/3,
       ),
       decoration: BoxDecoration(
-        color: AppColor.getPrimaryColor(context),
+        color: AppColor.getPrimaryColor(context).withOpacity(.93),
         boxShadow: [
           BoxShadow(
             color: showShadow ? AppColor.getSecondaryColor(context).withOpacity(.7) : Colors.transparent,
