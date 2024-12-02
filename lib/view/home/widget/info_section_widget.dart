@@ -17,7 +17,7 @@ class InfoSectionWidget extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(
         minHeight: minHeight,
-        maxHeight: DeviceSize.isTablet ? DeviceSize.height + (DeviceSize.height/3) : minHeight
+        maxHeight: DeviceSize.isTablet ? DeviceSize.height + (DeviceSize.height/5) : minHeight
       ),
       child: Container(
         width: DeviceSize.width,
@@ -248,7 +248,7 @@ class InfoSectionWidget extends StatelessWidget {
                   duration: const Duration(seconds: 3),
                   child: Image(
                     image: const AssetImage("assets/icons/flutter.png"),
-                    height: DeviceSize.isLargeScreen || DeviceSize.isTablet  ? 40 : 30,
+                    height: DeviceSize.isLargeScreen  ? 40 : DeviceSize.isTablet ? 50 :30,
                   )
                 )
               ),
@@ -263,7 +263,7 @@ class InfoSectionWidget extends StatelessWidget {
                     duration: const Duration(seconds: 3),
                     child: Image(
                       image: const AssetImage("assets/icons/nodejs.png"),
-                      height: DeviceSize.isLargeScreen || DeviceSize.isTablet  ? 40 : 30,
+                      height: DeviceSize.isLargeScreen  ? 40 : DeviceSize.isTablet ? 50 :30,
                     )
                   ),
                 )
@@ -277,7 +277,7 @@ class InfoSectionWidget extends StatelessWidget {
                   duration: const Duration(seconds: 3),
                   child: Image(
                     image: const AssetImage("assets/icons/kotlin.png"),
-                    height: DeviceSize.isLargeScreen || DeviceSize.isTablet  ? 40 : 30,
+                    height: DeviceSize.isLargeScreen  ? 40 : DeviceSize.isTablet ? 50 :30,
                   )
                 )
               ),

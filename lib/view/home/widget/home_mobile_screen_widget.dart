@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mourytech/bloc/home/home_cubit.dart';
+import 'package:mourytech/utils/device_size.dart';
 import 'package:mourytech/view/home/widget/about_me_section_widget.dart';
 import 'package:mourytech/view/home/widget/info_section_widget.dart';
 import 'package:mourytech/view/home/widget/logo_section_widget.dart';
@@ -42,6 +43,10 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
           controller: _scrollController,
           children: [
             SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight,),
+
+            if(DeviceSize.isTablet)
+            SizedBox(height: DeviceSize.height*0.05,),
+
             const InfoSectionWidget(),
             const AboutMeSectionWidget()
           ],
