@@ -2,48 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/device_size.dart';
+import 'package:mourytech/view/widget/waterfall_animation_widget.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
-class AboutMeSectionWidget extends StatelessWidget {
+class AboutMeSectionWidget extends StatefulWidget {
   const AboutMeSectionWidget({super.key});
+
+  @override
+  State<AboutMeSectionWidget> createState() => _AboutMeSectionWidgetState();
+}
+
+class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
+
+  late GlobalKey<WaterfallAnimationWidgetState> educationKey;
+  late GlobalKey<WaterfallAnimationWidgetState> experienceKey;
+
+
+  @override
+  void initState() {
+    super.initState();
+    educationKey = GlobalKey<WaterfallAnimationWidgetState>();
+    experienceKey = GlobalKey<WaterfallAnimationWidgetState>();
+  }
 
   @override
   Widget build(BuildContext context) {
     // double minHeight = DeviceSize.isLargeScreen? DeviceSize.height-(DeviceSize.height/2.5) :DeviceSize.height-(kToolbarHeight + DeviceSize.width*0.04);
 
     return Container(
-      // height: minHeight,
       margin: EdgeInsets.only(
-        top: DeviceSize.height*0.04
+        top: DeviceSize.isLargeScreen ? DeviceSize.height*0.04 : DeviceSize.height*0.03
       ),
       color: AppColor.cyan.withOpacity(.02),
       child: DeviceSize.isLargeScreen ? largeScreenContent() : mobileScreenContent(),
     );
   }
-  
+
   largeScreenContent() {
     return Column(
       children: [
-        Container(
-          margin: EdgeInsets.only(
-            top: DeviceSize.height*0.035
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            "About Me",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: DeviceSize.width*0.03,
-              color: AppColor.lightPrimaryColor,
-              shadows: [
-                Shadow(
-                  color: AppColor.cyan.withOpacity(.9),
-                  offset: const Offset(0, 2),
-                  blurRadius: 5
-                )
-              ]
-            ),
-          ),
-        ),
+        aboutMeTitleContainer(),
 
         Container(
           height: 5,
@@ -54,25 +52,9 @@ class AboutMeSectionWidget extends StatelessWidget {
           ),
         ),
 
-        Container(
-          margin: EdgeInsets.symmetric(
-            vertical: DeviceSize.height*0.06,
-            horizontal: DeviceSize.width*0.045 //0.035
-          ),
-          child: Text(
-            "I was born on December 21, 2002, in the bustling city of Mumbai. However, my early education took me to the serene landscapes of Bihar, where I completed my studies up to the 12th grade. Seeking new horizons, I pursued my graduation in Bhubaneswar, Odisha, immersing myself in a vibrant academic and cultural environment.\n\nCurrently, I am back in Mumbai, where my journey has come full circle, working in the city that has always inspired me. My experiences across different states have shaped me into a dynamic individual with a passion for technology and innovation.",
-            style: GoogleFonts.paprika(
-              fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.011 : DeviceSize.width*0.032,
-              color: AppColor.lightPrimaryColor,
-              height: 1.5
-            ),
-            textAlign: DeviceSize.isLargeScreen ? TextAlign.start :TextAlign.center,
-          ),
-        ),
-
+        introductionContainer(),
 
         Container(
-          // height: DeviceSize.height/1.5,
           width: DeviceSize.width,
           margin: EdgeInsets.only(
             top: DeviceSize.height*0.03,
@@ -82,128 +64,86 @@ class AboutMeSectionWidget extends StatelessWidget {
           padding: EdgeInsets.only(
             bottom: DeviceSize.height*0.05
           ),
-          child: educationExperienceSection(),
+          child: educationExperienceSectionLarge(),
         ),
-
       ],
     );
   }
-  
+
   mobileScreenContent() {
     return Column(
       children: [
+        aboutMeTitleContainer(),
+
         Container(
-          margin: EdgeInsets.only(
-            top: DeviceSize.height*0.035
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            "About Me",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: DeviceSize.width*0.03,
-              color: AppColor.lightPrimaryColor,
-              shadows: [
-                Shadow(
-                  color: AppColor.cyan.withOpacity(.9),
-                  offset: const Offset(0, 2),
-                  blurRadius: 5
-                )
-              ]
-            ),
+          height: 3,
+          width: 50,
+          decoration: BoxDecoration(
+            color: AppColor.vegasGold,
+            borderRadius: BorderRadius.circular(10)
           ),
         ),
 
+        introductionContainer(),
+
+        Container(
+          width: DeviceSize.width,
+          margin: EdgeInsets.only(
+            top: DeviceSize.height*0.03,
+            left: DeviceSize.width*0.05,
+            right: DeviceSize.width*0.05,
+          ),
+          padding: EdgeInsets.only(
+            bottom: DeviceSize.height*0.05
+          ),
+          child: educationExperienceSectionMobile(),
+        ),
       ],
     );
   }
-  
-  educationExperienceSection() {
+
+  educationExperienceSectionLarge() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,
-          child: SizedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                iconWithTitleContainer(icon: Icons.menu_book_rounded, title: "Education"),
-                verticalLine(size: DeviceSize.height*0.03),
-                pathContent(
-                  title: "Gita Autonomous College, Bhubaneshwar",
-                  dates: "2020 — 2024",
-                  description: "Btech in Computer Science & Information Technology"
-                ),
-                pathContent(
-                  title: "Ramdoot Intenational School, Uttar Pradesh",
-                  dates: "2019 — 2020",
-                  description: "Completed 12th with Science Stream"
-                ),
-                pathContent(
-                  title: "Raj English School, Uttar Pradesh",
-                  dates: "2017 — 2018",
-                  description: "Completed 10th",
-                  showPath: false
-                ),
-              ],
-            ),
-          ) 
+          child: educationStepper() 
         ),
 
         SizedBox(width: DeviceSize.width*0.02,),
 
         Expanded(
           flex: 1,
-          child: SizedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                iconWithTitleContainer(icon: Icons.work, title: "Experience"),
-                verticalLine(size: DeviceSize.height*0.03),
-                pathContent(
-                  title: "Infozzle Software Solutions Pvt. Ltd.",
-                  dates: "July, 2024 — Present",
-                  description: "FLutter Developer"
-                ),
-                pathContent(
-                  title: "Syflex Techno Solution Pvt. Ltd.",
-                  dates: "September, 2023 — March, 2024",
-                  description: "FLutter Developer Trainee"
-                ),
-                pathContent(
-                  title: "Oasis Infobyte",
-                  dates: "May, 2023 — Jun, 2023",
-                  description: "Android Developer ( Summer Intern )",
-                ),
-                pathContent(
-                  title: "Gauravgo Technologies",
-                  dates: "September, 2021 — November, 2022",
-                  description: "Android Developer ( Part time )",
-                  showPath: false
-                ),
-              ],
-            ),
-          ) 
+          child: experienceStepper(), 
         ),
-
       ],
     );
   }
-  
+
+  educationExperienceSectionMobile() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        educationStepper(),
+        SizedBox(height: DeviceSize.height*0.03,),
+        experienceStepper()
+      ],
+    );
+  }
+
   iconWithTitleContainer({required IconData icon, required String title}){
     return SizedBox(
       child: Row(
         children: [
           Container(
-            width: DeviceSize.width*0.04,
-            height: DeviceSize.width*0.04,
+            width: DeviceSize.isLargeScreen ? DeviceSize.width*0.04 : DeviceSize.width*0.1,
+            height: DeviceSize.isLargeScreen ? DeviceSize.width*0.04 : DeviceSize.width*0.1,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColor.darkPrimaryColor,
-              borderRadius: BorderRadius.circular((DeviceSize.width*0.04)/3),
+              borderRadius: BorderRadius.circular(DeviceSize.isLargeScreen ? (DeviceSize.width*0.04)/3 : (DeviceSize.width*0.1)/3),
               boxShadow: const [
                 BoxShadow(
                   color: AppColor.darkSecondaryColor,
@@ -214,19 +154,19 @@ class AboutMeSectionWidget extends StatelessWidget {
             child: Icon(
               icon, 
               color: AppColor.vegasGold,
-              size: (DeviceSize.width*0.04)/2,
+              size: DeviceSize.isLargeScreen ? (DeviceSize.width*0.04)/2 : (DeviceSize.width*0.1)/2,
             ),
           ),
 
           Container(
             margin: EdgeInsets.only(
-              left: DeviceSize.width*0.02
+              left: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.03
             ),
             child: Text(
               title,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: DeviceSize.width*0.02,
+                fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.05,
                 color: AppColor.vegasGold,
               ),
             ),
@@ -235,11 +175,11 @@ class AboutMeSectionWidget extends StatelessWidget {
       ),
     );
   }
-  
+
   verticalLine({required double size }) {
     return SizedBox(
       height: size,
-      width: DeviceSize.width*0.04,
+      width: DeviceSize.isLargeScreen ? DeviceSize.width*0.04 : DeviceSize.width*0.1,
       child: Center(
         child: Container(
           width: 1,
@@ -258,8 +198,8 @@ class AboutMeSectionWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch, 
             children: [
               Container(
-                margin: EdgeInsets.only(right: DeviceSize.width * 0.02),
-                width: DeviceSize.width * 0.04,
+                margin: EdgeInsets.only(right: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.03),
+                width: DeviceSize.isLargeScreen ? DeviceSize.width*0.04 : DeviceSize.width*0.1,
                 child: Center(
                   child: Container(
                     width: showPath ? 1 :0,
@@ -278,7 +218,7 @@ class AboutMeSectionWidget extends StatelessWidget {
                         title,
                         style: GoogleFonts.paprika(
                           fontWeight: FontWeight.bold,
-                          fontSize: DeviceSize.width*0.011,
+                          fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.011 : DeviceSize.width*0.032,
                           color: AppColor.lightPrimaryColor,
                         ),
                       ),
@@ -288,7 +228,7 @@ class AboutMeSectionWidget extends StatelessWidget {
                       child: Text(
                         dates,
                         style: GoogleFonts.paprika(
-                          fontSize: DeviceSize.width * 0.01,
+                          fontSize: DeviceSize.isLargeScreen ? DeviceSize.width * 0.01 : DeviceSize.width*0.03,
                           color: AppColor.cyan,
                         ),
                       ),
@@ -298,7 +238,7 @@ class AboutMeSectionWidget extends StatelessWidget {
                       child: Text(
                         description,
                         style: GoogleFonts.paprika(
-                          fontSize: DeviceSize.width * 0.01,
+                          fontSize: DeviceSize.isLargeScreen ? DeviceSize.width * 0.01 : DeviceSize.width*0.03,
                           color: AppColor.lightSecondaryColor.withOpacity(.8),
                         ),
                       ),
@@ -315,13 +255,13 @@ class AboutMeSectionWidget extends StatelessWidget {
             left: 0,
             child: Container(
               margin: EdgeInsets.only(
-                right: DeviceSize.width*0.02
+                right: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.03
               ),
-              width: DeviceSize.width*0.04,
+              width: DeviceSize.isLargeScreen ? DeviceSize.width*0.04 : DeviceSize.width*0.1,
               child: Center(
                 child: Container(
-                  width: DeviceSize.height*0.015,
-                  height: DeviceSize.height*0.015,
+                  width: DeviceSize.isLargeScreen ? DeviceSize.height*0.015 : DeviceSize.height*0.01,
+                  height: DeviceSize.isLargeScreen ? DeviceSize.height*0.015 : DeviceSize.height*0.01,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColor.vegasGold,
@@ -342,4 +282,130 @@ class AboutMeSectionWidget extends StatelessWidget {
     );
   }
 
+  aboutMeTitleContainer() {
+    return Container(
+      margin: EdgeInsets.only(
+        top: DeviceSize.isLargeScreen ? DeviceSize.height*0.035 : DeviceSize.height*0.03
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        "About Me",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.03 :DeviceSize.width*0.08,
+          color: AppColor.lightPrimaryColor,
+          shadows: [
+            Shadow(
+              color: AppColor.cyan.withOpacity(.9),
+              offset: const Offset(0, 2),
+              blurRadius: 5
+            )
+          ]
+        ),
+      ),
+    );
+  }
+
+  introductionContainer() {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: DeviceSize.isLargeScreen ? DeviceSize.height*0.06 : DeviceSize.height*0.04,
+        horizontal: DeviceSize.isLargeScreen ? DeviceSize.width*0.045 : DeviceSize.width*0.05 ,
+      ),
+      child: Text(
+        "I was born on December 21, 2002, in the bustling city of Mumbai. However, my early education took me to the serene landscapes of Bihar, where I completed my studies up to the 12th grade. Seeking new horizons, I pursued my graduation in Bhubaneswar, Odisha, immersing myself in a vibrant academic and cultural environment.\n\nCurrently, I am back in Mumbai, where my journey has come full circle, working in the city that has always inspired me. My experiences across different states have shaped me into a dynamic individual with a passion for technology and innovation.",
+        style: GoogleFonts.paprika(
+          fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.011 : DeviceSize.width*0.032,
+          color: AppColor.lightPrimaryColor,
+          height: 1.5
+        ),
+        textAlign: DeviceSize.isLargeScreen ? TextAlign.start :TextAlign.center,
+      ),
+    );
+  }
+  
+  educationStepper() {
+    return SizedBox(
+      child: VisibilityDetector(
+        key: const Key('educationSection'),
+        onVisibilityChanged: (info) {
+          if (info.visibleFraction > 0.3) {
+            educationKey.currentState?.playAnimation();
+          } else if (info.visibleFraction == 0.0) {
+            educationKey.currentState?.resetAnimation();
+          }
+        },
+        child: WaterfallAnimationWidget(
+          key: educationKey,
+          duration: const Duration(seconds: 2),
+          delay: const Duration(milliseconds: 100),
+          children: [
+            iconWithTitleContainer(icon: Icons.menu_book_rounded, title: "Education"),
+            verticalLine(size: DeviceSize.height*0.03),
+            pathContent(
+              title: "Gita Autonomous College, Bhubaneshwar",
+              dates: "2020 — 2024",
+              description: "Btech in Computer Science & Information Technology"
+            ),
+            pathContent(
+              title: "Ramdoot Intenational School, Uttar Pradesh",
+              dates: "2019 — 2020",
+              description: "Completed 12th with Science Stream"
+            ),
+            pathContent(
+              title: "Raj English School, Uttar Pradesh",
+              dates: "2017 — 2018",
+              description: "Completed 10th",
+              showPath: false
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  experienceStepper() {
+    return SizedBox(
+      child: VisibilityDetector(
+        key: const Key('experienceSection'),
+        onVisibilityChanged: (info) {
+          if (info.visibleFraction > 0.3) {
+            experienceKey.currentState?.playAnimation();
+          } else if (info.visibleFraction == 0.0){
+            experienceKey.currentState?.resetAnimation();
+          }
+        },
+        child: WaterfallAnimationWidget(
+          key: experienceKey,
+          duration: const Duration(seconds: 2),
+          delay: const Duration(milliseconds: 100),
+          children: [
+            iconWithTitleContainer(icon: Icons.work, title: "Experience"),
+            verticalLine(size: DeviceSize.height*0.03),
+            pathContent(
+              title: "Infozzle Software Solutions Pvt. Ltd.",
+              dates: "July, 2024 — Present",
+              description: "FLutter Developer"
+            ),
+            pathContent(
+              title: "Syflex Techno Solution Pvt. Ltd.",
+              dates: "September, 2023 — March, 2024",
+              description: "FLutter Developer Trainee"
+            ),
+            pathContent(
+              title: "Oasis Infobyte",
+              dates: "May, 2023 — Jun, 2023",
+              description: "Android Developer ( Summer Intern )",
+            ),
+            pathContent(
+              title: "Gauravgo Technologies",
+              dates: "September, 2021 — November, 2022",
+              description: "Android Developer ( Part time )",
+              showPath: false
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
