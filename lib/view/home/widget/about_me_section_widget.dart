@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mourytech/configs/colors/colors.dart';
+import 'package:mourytech/utils/constant/app_constant.dart';
 import 'package:mourytech/utils/device_size.dart';
 import 'package:mourytech/view/widget/waterfall_animation_widget.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -66,6 +67,19 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
           ),
           child: educationExperienceSectionLarge(),
         ),
+
+        Container(
+          width: DeviceSize.width,
+          margin: EdgeInsets.only(
+            top: DeviceSize.height*0.03,
+            left: DeviceSize.width*0.045,
+            right: DeviceSize.width*0.045,
+          ),
+          padding: EdgeInsets.only(
+            bottom: DeviceSize.height*0.05
+          ),
+          child: skillSection(),
+        ),
       ],
     );
   }
@@ -97,6 +111,19 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
             bottom: DeviceSize.height*0.05
           ),
           child: educationExperienceSectionMobile(),
+        ),
+
+        Container(
+          width: DeviceSize.width,
+          margin: EdgeInsets.only(
+            top: DeviceSize.height*0.01,
+            left: DeviceSize.width*0.05,
+            right: DeviceSize.width*0.05,
+          ),
+          padding: EdgeInsets.only(
+            bottom: DeviceSize.height*0.05
+          ),
+          child: skillSection(),
         ),
       ],
     );
@@ -408,4 +435,101 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
       ),
     );
   }
+
+  skillSection(){
+    return Container(
+      alignment: Alignment.topLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          iconWithTitleContainer(icon: Icons.lightbulb, title: "Skills"),
+
+          SizedBox(height: DeviceSize.height*0.03),
+
+          Container(
+            margin: EdgeInsets.only(left: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.03),
+            child: Wrap(
+              runSpacing: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.05,
+              spacing: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.05,
+              alignment: WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: skills.map((item) => skillCard(item),).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  Widget skillCard(Map<String, dynamic> item) {
+    return Container(
+      width: DeviceSize.isLargeScreen ? DeviceSize.width*0.15 : DeviceSize.width*0.4,
+      height: DeviceSize.isLargeScreen ? DeviceSize.height*0.25 : DeviceSize.height*0.15,
+      decoration: BoxDecoration(
+        color: AppColor.darkPrimaryColor,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: AppColor.cyan.withOpacity(.2),
+             offset: const Offset(1, 1),
+             blurRadius: 1,
+             spreadRadius: .5
+          )
+        ]
+      ),
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CircularProgressIndicator(
+                  color: AppColor.vegasGold,
+                  value: item["score"]/100,
+                  backgroundColor: AppColor.cyan.withOpacity(.1),
+                  strokeCap: StrokeCap.round,
+                ),
+
+                Text(
+                  "${item["score"]}%", // Display percentage
+                  style: TextStyle(
+                    color: AppColor.vegasGold,
+                    fontWeight: FontWeight.bold,
+                    fontSize: DeviceSize.isLargeScreen ? DeviceSize.width * 0.01 : DeviceSize.width*0.025,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: DeviceSize.width,
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: DeviceSize.isLargeScreen ? DeviceSize.width*0.01 : DeviceSize.width*0.02),
+              margin: EdgeInsets.only(bottom: DeviceSize.isLargeScreen ? DeviceSize.width*0.01 : DeviceSize.width*0.01),
+              child: Text(
+                item["title"],
+                style: TextStyle(
+                  color: AppColor.lightPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.015 : DeviceSize.width*0.04,
+                  height: 1.2
+                ),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
