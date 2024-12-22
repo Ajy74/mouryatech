@@ -57,7 +57,12 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
     setState(() => _currentIndex = index);
     switch (index) {
       case 0:
-        _scrollToSection(_infoSectionKey);
+        // _scrollToSection(_infoSectionKey);
+        _scrollController.animateTo(
+          0.0,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut, 
+        );
         break;
       case 1:
         _scrollToSection(_aboutMeSectionKey);
@@ -111,79 +116,53 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
           ),
         ),
 
-        // Positioned(
-        //   bottom: 10,
-        //   right: 10,
-        //   left: 10,
-        //   child: Container(
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         GestureDetector(
-        //           child: IconButton(
-        //             onPressed: (){
-        //               _scrollToSection(_aboutMeSectionKey);
-        //             }, 
-        //             icon: const Icon(Icons.ads_click)
-        //           ),
-        //         ),
-        //         SizedBox(width: 20,),
-        //         GestureDetector(
-        //           child: IconButton(
-        //             onPressed: (){
-        //               _scrollToSection(_myProjectSectionKey);
-        //             }, 
-        //             icon: const Icon(Icons.ads_click)
-        //           ),
-        //         )
-        //       ],
-        //     ),
-        //   )
-        // ),
-
         Positioned(
           bottom: 0,
           right: 0,
           left: 0,
           child: Container(
+            margin: EdgeInsets.symmetric(horizontal: DeviceSize.width*0.03,vertical: DeviceSize.width*0.03),
             decoration: BoxDecoration(
               color: AppColor.darkPrimaryColor,
+              borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: AppColor.darkPrimaryColor.withOpacity(0.2),
+                  color: AppColor.cyan.withOpacity(0.04),
                   blurRadius: 8,
                   spreadRadius: 2,
                 ),
               ],
             ),
-            child: BottomNavigationBar(
-              currentIndex: _currentIndex,
-              onTap: _onBottomNavigationTap,
-              type: BottomNavigationBarType.shifting,
-              selectedItemColor: AppColor.orangeYellowCrayola,
-              unselectedItemColor: AppColor.lightPrimaryColor.withOpacity(.5),
-              showUnselectedLabels: false,
-              backgroundColor: AppColor.cyan,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: "Home",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: "About Me",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.work),
-                  label: "Projects",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.contact_mail),
-                  label: "Hire Me",
-                ),
-              ],
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: BottomNavigationBar(
+                currentIndex: _currentIndex,
+                onTap: _onBottomNavigationTap,
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: AppColor.orangeYellowCrayola,
+                unselectedItemColor: AppColor.lightPrimaryColor.withOpacity(.5),
+                showUnselectedLabels: true,
+                backgroundColor: AppColor.darkColor1.withOpacity(.05),
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.now_widgets_outlined),
+                    label: "Info",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person_3_rounded),
+                    label: "About Me",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.workspaces_filled),
+                    label: "Projects",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.contact_mail),
+                    label: "Hire Me",
+                  ),
+                ],
+              ),
             ),
-            
           ),
         ),
 
