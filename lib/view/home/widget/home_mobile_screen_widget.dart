@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mourytech/bloc/home/home_cubit.dart';
+import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/device_size.dart';
 import 'package:mourytech/view/home/widget/about_me_section_widget.dart';
 import 'package:mourytech/view/home/widget/info_section_widget.dart';
 import 'package:mourytech/view/home/widget/logo_section_widget.dart';
+import 'package:mourytech/view/home/widget/my_project_section_widget.dart';
 
 class HomeMobileScreenWidget extends StatefulWidget {
   const HomeMobileScreenWidget({super.key});
@@ -16,6 +18,12 @@ class HomeMobileScreenWidget extends StatefulWidget {
 class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
   final ScrollController _scrollController = ScrollController();
 
+  final GlobalKey _infoSectionKey = GlobalKey();
+  final GlobalKey _aboutMeSectionKey = GlobalKey();
+  final GlobalKey _myProjectSectionKey = GlobalKey();
+  final GlobalKey _hireMeSectionKey = GlobalKey();
+
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -34,22 +42,55 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
     context.read<HomeCubit>().updateScrolling(_scrollController.offset <= 0);
   }
 
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _onBottomNavigationTap(int index) {
+    setState(() => _currentIndex = index);
+    switch (index) {
+      case 0:
+        _scrollToSection(_infoSectionKey);
+        break;
+      case 1:
+        _scrollToSection(_aboutMeSectionKey);
+        break;
+      case 2:
+        _scrollToSection(_myProjectSectionKey);
+        break;
+      case 3:
+        _scrollToSection(_hireMeSectionKey);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ListView(
+        SingleChildScrollView(
           controller: _scrollController,
-          children: [
-            SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight,),
-
-            if(DeviceSize.isTablet)
-            SizedBox(height: DeviceSize.height*0.05,),
-
-            const InfoSectionWidget(),
-            const AboutMeSectionWidget()
-          ],
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight,),
+          
+              if(DeviceSize.isTablet)
+              SizedBox(height: DeviceSize.height*0.05,),
+          
+              InfoSectionWidget(key: _infoSectionKey),
+              AboutMeSectionWidget(key: _aboutMeSectionKey),
+              MyProjectSectionWidget(key: _myProjectSectionKey),
+              Container(key: _hireMeSectionKey, height: 300, color: Colors.red),
+            ],
+          ),
         ),
 
         Positioned(
@@ -60,12 +101,92 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
             buildWhen: (previous, current) => current is HomeInitialState || current is ScrollUpdateState,
             builder: (context, state) {
               if (state is ScrollUpdateState) {
-                return LogoSectionWidget(showShadow: !state.scroll,);
+                return LogoSectionWidget(
+                  showShadow: !state.scroll,
+                  menuCallbacks: const {},
+                );
               }
-              return const LogoSectionWidget(showShadow: false,);
+              return const LogoSectionWidget(showShadow: false, menuCallbacks: {},);
             }, 
           ),
         ),
+
+        // Positioned(
+        //   bottom: 10,
+        //   right: 10,
+        //   left: 10,
+        //   child: Container(
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         GestureDetector(
+        //           child: IconButton(
+        //             onPressed: (){
+        //               _scrollToSection(_aboutMeSectionKey);
+        //             }, 
+        //             icon: const Icon(Icons.ads_click)
+        //           ),
+        //         ),
+        //         SizedBox(width: 20,),
+        //         GestureDetector(
+        //           child: IconButton(
+        //             onPressed: (){
+        //               _scrollToSection(_myProjectSectionKey);
+        //             }, 
+        //             icon: const Icon(Icons.ads_click)
+        //           ),
+        //         )
+        //       ],
+        //     ),
+        //   )
+        // ),
+
+        Positioned(
+          bottom: 0,
+          right: 0,
+          left: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColor.darkPrimaryColor,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColor.darkPrimaryColor.withOpacity(0.2),
+                  blurRadius: 8,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: BottomNavigationBar(
+              currentIndex: _currentIndex,
+              onTap: _onBottomNavigationTap,
+              type: BottomNavigationBarType.shifting,
+              selectedItemColor: AppColor.orangeYellowCrayola,
+              unselectedItemColor: AppColor.lightPrimaryColor.withOpacity(.5),
+              showUnselectedLabels: false,
+              backgroundColor: AppColor.cyan,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: "Home",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: "About Me",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.work),
+                  label: "Projects",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.contact_mail),
+                  label: "Hire Me",
+                ),
+              ],
+            ),
+            
+          ),
+        ),
+
       ],
     );
   }

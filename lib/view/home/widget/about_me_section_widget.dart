@@ -464,8 +464,8 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
   
   Widget skillCard(Map<String, dynamic> item) {
     return Container(
-      width: DeviceSize.isLargeScreen ? DeviceSize.width*0.15 : DeviceSize.width*0.4,
-      height: DeviceSize.isLargeScreen ? DeviceSize.height*0.25 : DeviceSize.height*0.15,
+      width: DeviceSize.isLargeScreen ? DeviceSize.width*0.14 : DeviceSize.width*0.4,
+      height: DeviceSize.isLargeScreen ? DeviceSize.height*0.23 : DeviceSize.height*0.15,
       decoration: BoxDecoration(
         color: AppColor.darkPrimaryColor,
         borderRadius: BorderRadius.circular(12),
@@ -515,10 +515,10 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
               margin: EdgeInsets.only(bottom: DeviceSize.isLargeScreen ? DeviceSize.width*0.01 : DeviceSize.width*0.01),
               child: Text(
                 item["title"],
-                style: TextStyle(
+                style: GoogleFonts.paprika(
                   color: AppColor.lightPrimaryColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.015 : DeviceSize.width*0.04,
+                  fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.01 : (DeviceSize.isTablet? DeviceSize.width*0.025 :DeviceSize.width*0.03),
                   height: 1.2
                 ),
                 maxLines: 2,

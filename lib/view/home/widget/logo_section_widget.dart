@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mourytech/bloc/theme/theme_cubit.dart';
+// import 'package:mourytech/bloc/theme/theme_cubit.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/device_size.dart';
 
 class LogoSectionWidget extends StatelessWidget {
-  const LogoSectionWidget({super.key, required this.showShadow});
+  const LogoSectionWidget({super.key, required this.showShadow, required this.menuCallbacks,});
 
   final bool showShadow;
+  final Map<String, VoidCallback> menuCallbacks;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,8 @@ class LogoSectionWidget extends StatelessWidget {
     double bodyMarginHorizontal = DeviceSize.isLargeScreen?DeviceSize.width*0.025:DeviceSize.width*0.05;
     double bodyMarginVertical = DeviceSize.isLargeScreen?DeviceSize.width*0.015:MediaQuery.of(context).padding.top;
     // double bodyMarginVertical = DeviceSize.isLargeScreen?DeviceSize.width*0.015:DeviceSize.width*0.05;
-    double modeIconSize = DeviceSize.isLargeScreen?DeviceSize.width*0.017:DeviceSize.width*0.06;
+
+    // double modeIconSize = DeviceSize.isLargeScreen?DeviceSize.width*0.017:DeviceSize.width*0.06;
 
     return Container(
       padding: EdgeInsets.only(
@@ -62,18 +64,45 @@ class LogoSectionWidget extends StatelessWidget {
 
           const Spacer(),
 
-          IconButton(
-            onPressed: (){
-              context.read<ThemeCubit>().toggleTheme();
-            }, 
-            icon: Icon(
-              Theme.of(context).brightness == Brightness.dark ? Icons.light_mode_outlined :Icons.dark_mode_outlined, 
-              color: Theme.of(context).brightness == Brightness.dark ?AppColor.lightSecondaryColor:AppColor.darkSecondaryColor,
-              size: modeIconSize,
-            )
-          )
+          //~ menu items
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: menuCallbacks.entries.map((entry) {
+              return _buildMenuItem(entry.key, entry.value);
+            }).toList(),
+          ),
+
+          // IconButton(
+          //   onPressed: (){
+          //     context.read<ThemeCubit>().toggleTheme();
+          //   }, 
+          //   icon: Icon(
+          //     Theme.of(context).brightness == Brightness.dark ? Icons.light_mode_outlined :Icons.dark_mode_outlined, 
+          //     color: Theme.of(context).brightness == Brightness.dark ?AppColor.lightSecondaryColor:AppColor.darkSecondaryColor,
+          //     size: modeIconSize,
+          //   )
+          // )
         ],
       ),
     );
   }
+
+  Widget _buildMenuItem(String title, VoidCallback onTap) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(5),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: AppColor.lightPrimaryColor,
+            fontSize: DeviceSize.isLargeScreen ? 16 : 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
 }

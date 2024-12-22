@@ -5,6 +5,7 @@ import 'package:mourytech/utils/device_size.dart';
 import 'package:mourytech/view/home/widget/about_me_section_widget.dart';
 import 'package:mourytech/view/home/widget/info_section_widget.dart';
 import 'package:mourytech/view/home/widget/logo_section_widget.dart';
+import 'package:mourytech/view/home/widget/my_project_section_widget.dart';
 
 class HomeLargeScreenWidget extends StatefulWidget {
   const HomeLargeScreenWidget({super.key});
@@ -16,8 +17,13 @@ class HomeLargeScreenWidget extends StatefulWidget {
 class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
 
   final ScrollController _scrollController = ScrollController();
-  
 
+  final GlobalKey _infoSectionKey = GlobalKey();
+  final GlobalKey _aboutMeSectionKey = GlobalKey();
+  final GlobalKey _myProjectSectionKey = GlobalKey();
+  final GlobalKey _hireMeSectionKey = GlobalKey();
+  
+  
   @override
   void initState() {
     super.initState();
@@ -35,18 +41,33 @@ class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
     context.read<HomeCubit>().updateScrolling(_scrollController.offset <= 0);
   }
 
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ListView(
+        SingleChildScrollView(
           controller: _scrollController,
-          children: [
-            SizedBox(height: DeviceSize.width*0.04 + MediaQuery.of(context).padding.top + kToolbarHeight,),
-            const InfoSectionWidget(),
-            const AboutMeSectionWidget()
-          ],
+          child: Column(
+            children: [
+              SizedBox(height: DeviceSize.width*0.04 + MediaQuery.of(context).padding.top + kToolbarHeight,),
+              InfoSectionWidget(key: _infoSectionKey),
+              AboutMeSectionWidget(key: _aboutMeSectionKey),
+              MyProjectSectionWidget(key: _myProjectSectionKey),
+              Container(key: _hireMeSectionKey, height: 300, color: Colors.red),
+            ],
+          ),
         ),
 
         Positioned(
@@ -57,9 +78,25 @@ class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
             buildWhen: (previous, current) => current is HomeInitialState || current is ScrollUpdateState,
             builder: (context, state) {
               if (state is ScrollUpdateState) {
-                return LogoSectionWidget(showShadow: !state.scroll,);
+                return LogoSectionWidget(
+                  showShadow: !state.scroll,
+                  menuCallbacks: {
+                    "Home": () => _scrollToSection(_infoSectionKey),
+                    "About Me": () => _scrollToSection(_aboutMeSectionKey),
+                    "Projects": () => _scrollToSection(_myProjectSectionKey),
+                    "Hire Me": () => _scrollToSection(_hireMeSectionKey),
+                  },
+                );
               }
-              return const LogoSectionWidget(showShadow: false,);
+              return LogoSectionWidget(
+                showShadow: false,
+                menuCallbacks: {
+                  "Home": () => _scrollToSection(_infoSectionKey),
+                  "About Me": () => _scrollToSection(_aboutMeSectionKey),
+                  "Projects": () => _scrollToSection(_myProjectSectionKey),
+                  "Hire Me": () => _scrollToSection(_hireMeSectionKey),
+                },
+              );
             }, 
           ),
         ),
