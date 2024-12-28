@@ -464,8 +464,12 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
   
   Widget skillCard(Map<String, dynamic> item) {
     return Container(
-      width: DeviceSize.isLargeScreen ? DeviceSize.width*0.14 : DeviceSize.width*0.4,
-      height: DeviceSize.isLargeScreen ? DeviceSize.height*0.23 : DeviceSize.height*0.15,
+      // width: DeviceSize.isLargeScreen ? DeviceSize.width*0.14 : DeviceSize.width*0.4,
+      // height: DeviceSize.isLargeScreen ? DeviceSize.height*0.07 : DeviceSize.height*0.07,
+      padding: EdgeInsets.symmetric(
+        horizontal: DeviceSize.isLargeScreen ? DeviceSize.width*0.02 : DeviceSize.width*0.04,
+        vertical: DeviceSize.isLargeScreen ? DeviceSize.width*0.01 : DeviceSize.width*0.03
+      ),
       decoration: BoxDecoration(
         color: AppColor.darkPrimaryColor,
         borderRadius: BorderRadius.circular(12),
@@ -479,10 +483,22 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
         ]
       ),
 
-      child: Column(
+      child: Text(
+        item["title"],
+        style: GoogleFonts.paprika(
+          color: AppColor.lightPrimaryColor,
+          fontWeight: FontWeight.bold,
+          fontSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.01 : (DeviceSize.isTablet? DeviceSize.width*0.025 :DeviceSize.width*0.03),
+          height: 1.2
+        ),
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+      ),
+
+      /*child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
+          /*Expanded(
             flex: 2,
             child: Stack(
               alignment: Alignment.center,
@@ -504,9 +520,9 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
                 ),
               ],
             ),
-          ),
+          ), */
 
-          Expanded(
+          /*Expanded(
             flex: 1,
             child: Container(
               width: DeviceSize.width,
@@ -527,8 +543,10 @@ class _AboutMeSectionWidgetState extends State<AboutMeSectionWidget> {
               ),
             ),
           ),
+          */
         ],
-      ),
+      ), */
+
     );
   }
 

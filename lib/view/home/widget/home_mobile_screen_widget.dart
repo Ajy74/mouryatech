@@ -4,6 +4,7 @@ import 'package:mourytech/bloc/home/home_cubit.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/device_size.dart';
 import 'package:mourytech/view/home/widget/about_me_section_widget.dart';
+import 'package:mourytech/view/home/widget/contact_me_section_widget.dart';
 import 'package:mourytech/view/home/widget/info_section_widget.dart';
 import 'package:mourytech/view/home/widget/logo_section_widget.dart';
 import 'package:mourytech/view/home/widget/my_project_section_widget.dart';
@@ -21,7 +22,7 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
   final GlobalKey _infoSectionKey = GlobalKey();
   final GlobalKey _aboutMeSectionKey = GlobalKey();
   final GlobalKey _myProjectSectionKey = GlobalKey();
-  final GlobalKey _hireMeSectionKey = GlobalKey();
+  final GlobalKey _contactMeSectionKey = GlobalKey();
 
   int _currentIndex = 0;
 
@@ -71,7 +72,7 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
         _scrollToSection(_myProjectSectionKey);
         break;
       case 3:
-        _scrollToSection(_hireMeSectionKey);
+        _scrollToSection(_contactMeSectionKey);
         break;
     }
   }
@@ -93,7 +94,7 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
               InfoSectionWidget(key: _infoSectionKey),
               AboutMeSectionWidget(key: _aboutMeSectionKey),
               MyProjectSectionWidget(key: _myProjectSectionKey),
-              Container(key: _hireMeSectionKey, height: 300, color: Colors.red),
+              ContactMeSectionWidget(key: _contactMeSectionKey,)
             ],
           ),
         ),
@@ -158,7 +159,7 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.contact_mail),
-                    label: "Hire Me",
+                    label: "Contact Me",
                   ),
                 ],
               ),
