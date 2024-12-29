@@ -1,9 +1,9 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mourytech/bloc/home/home_cubit.dart';
 import 'package:mourytech/bloc/theme/theme_cubit.dart';
@@ -17,6 +17,8 @@ void main() async{
   // if( !(Platform.isAndroid || Platform.isIOS) ){
   //   usePathUrlStrategy();
   // }
+
+  usePathUrlStrategy();
 
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
