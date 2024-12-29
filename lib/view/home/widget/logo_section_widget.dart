@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,8 +16,8 @@ class LogoSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double logoTextSize = DeviceSize.isLargeScreen?DeviceSize.width*0.025:DeviceSize.width*0.08;
-    double bodyMarginHorizontal = DeviceSize.isLargeScreen?DeviceSize.width*0.025:DeviceSize.width*0.05;
-    double bodyMarginVertical = DeviceSize.isLargeScreen?DeviceSize.width*0.015:MediaQuery.of(context).padding.top;
+    double bodyMarginHorizontal = DeviceSize.isLargeScreen ? DeviceSize.width*0.025:DeviceSize.width*0.05;
+    double bodyMarginVertical = DeviceSize.isLargeScreen ? DeviceSize.width*0.015: kIsWeb ? DeviceSize.height*0.015 : MediaQuery.of(context).padding.top;
     // double bodyMarginVertical = DeviceSize.isLargeScreen?DeviceSize.width*0.015:DeviceSize.width*0.05;
 
     // double modeIconSize = DeviceSize.isLargeScreen?DeviceSize.width*0.017:DeviceSize.width*0.06;
@@ -26,7 +27,7 @@ class LogoSectionWidget extends StatelessWidget {
         left: bodyMarginHorizontal,
         right: bodyMarginHorizontal,
         top: bodyMarginVertical,
-        bottom: DeviceSize.isLargeScreen?bodyMarginVertical:bodyMarginVertical/3,
+        bottom: DeviceSize.isLargeScreen ? bodyMarginVertical : kIsWeb ? DeviceSize.height*0.015 :bodyMarginVertical/3,
       ),
       decoration: BoxDecoration(
         color: AppColor.getPrimaryColor(context).withOpacity(.93),

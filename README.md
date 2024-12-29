@@ -1,6 +1,6 @@
-# mourytech
+# mouryatech
 
-A new Flutter project.
+This is my portfolio.
 
 ## Getting Started
 **Flutter Version** : 3.22.2
