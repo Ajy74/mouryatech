@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "942361532654",
+    "project_id": "my-portfolio-df88f",
+    "storage_bucket": "my-portfolio-df88f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942361532654:android:a1e1127d398f05de0a7bff",
+        "android_client_info": {
+          "package_name": "com.example.mourytech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqiCEw_swW91eLXk_ok_v2BCUHZh1oft8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

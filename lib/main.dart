@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -8,13 +9,18 @@ import 'package:mourytech/bloc/home/home_cubit.dart';
 import 'package:mourytech/bloc/theme/theme_cubit.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/configs/routes/routes.dart';
+import 'package:mourytech/firebase_options.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   
   // if( !(Platform.isAndroid || Platform.isIOS) ){
   //   usePathUrlStrategy();
   // }
+
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
