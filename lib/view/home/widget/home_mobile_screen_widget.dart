@@ -39,9 +39,66 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
     super.dispose();
   }
 
+  // void _onScroll() {
+  //   context.read<HomeCubit>().updateScrolling(_scrollController.offset <= 0);
+  // }
+
   void _onScroll() {
     context.read<HomeCubit>().updateScrolling(_scrollController.offset <= 0);
+
+    final scrollOffset = _scrollController.offset;
+
+    // Get the context of each section
+    final infoSectionContext = _infoSectionKey.currentContext;
+    final aboutMeSectionContext = _aboutMeSectionKey.currentContext;
+    final myProjectSectionContext = _myProjectSectionKey.currentContext;
+    final contactMeSectionContext = _contactMeSectionKey.currentContext;
+
+    if (infoSectionContext != null) {
+      final infoBox = infoSectionContext.findRenderObject() as RenderBox;
+      final infoOffset = infoBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= infoOffset && scrollOffset < infoOffset + infoBox.size.height) {
+        _updateCurrentIndex(0);
+      }
+    }
+
+    if (aboutMeSectionContext != null) {
+      final aboutMeBox = aboutMeSectionContext.findRenderObject() as RenderBox;
+      final aboutMeOffset = aboutMeBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= aboutMeOffset && scrollOffset < aboutMeOffset + aboutMeBox.size.height) {
+        _updateCurrentIndex(1);
+      }
+    }
+
+    if (myProjectSectionContext != null) {
+      final projectBox = myProjectSectionContext.findRenderObject() as RenderBox;
+      final projectOffset = projectBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= projectOffset && scrollOffset < projectOffset + projectBox.size.height) {
+        _updateCurrentIndex(2);
+      }
+    }
+
+    if (contactMeSectionContext != null) {
+      final contactBox = contactMeSectionContext.findRenderObject() as RenderBox;
+      final contactOffset = contactBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= contactOffset) {
+        _updateCurrentIndex(3);
+      }
+    }
   }
+
+  void _updateCurrentIndex(int newIndex) {
+    if (_currentIndex != newIndex) {
+      setState(() {
+        _currentIndex = newIndex;
+      });
+    }
+  }
+
 
   void _scrollToSection(GlobalKey key) {
     final context = key.currentContext;
@@ -110,9 +167,10 @@ class _HomeMobileScreenWidgetState extends State<HomeMobileScreenWidget> {
                 return LogoSectionWidget(
                   showShadow: !state.scroll,
                   menuCallbacks: const {},
+                  selectedTitle: '',
                 );
               }
-              return const LogoSectionWidget(showShadow: false, menuCallbacks: {},);
+              return const LogoSectionWidget(showShadow: false, menuCallbacks: {}, selectedTitle: '',);
             }, 
           ),
         ),

@@ -6,6 +6,7 @@ import 'package:mourytech/view/home/widget/form/email_input_widget.dart';
 import 'package:mourytech/view/home/widget/form/msg_input_widget.dart';
 import 'package:mourytech/view/home/widget/form/name_input_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mourytech/view/home/widget/form/phone_input_widget.dart';
 import 'package:mourytech/view/widget/custom_button_widget.dart';
 import 'package:mourytech/view/widget/custom_snackbar.dart';
 
@@ -21,6 +22,9 @@ class ContactFormWidget extends StatelessWidget {
           SizedBox(height: DeviceSize.isLargeScreen ? DeviceSize.height*0.035 : DeviceSize.height*0.025,),
 
           EmailInputField(focusNode: context.read<HomeCubit>().emailFocus),
+          SizedBox(height: DeviceSize.isLargeScreen ? DeviceSize.height*0.035 : DeviceSize.height*0.025,),
+
+          PhoneInputField(focusNode: context.read<HomeCubit>().phoneFocus),
           SizedBox(height: DeviceSize.isLargeScreen ? DeviceSize.height*0.035 : DeviceSize.height*0.025,),
 
           MsgInputField(focusNode: context.read<HomeCubit>().msgFocus),
@@ -44,7 +48,7 @@ class ContactFormWidget extends StatelessWidget {
                 String msg = context.read<HomeCubit>().msgController.text ;
 
                 if(name.isNotEmpty && email.isNotEmpty && msg.isNotEmpty){
-                  context.read<HomeCubit>().sendMail(context);
+                  context.read<HomeCubit>().sendMessage(context);
                 }else{
                   customSnackBar(
                     context, 

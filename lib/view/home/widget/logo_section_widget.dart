@@ -6,9 +6,10 @@ import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/device_size.dart';
 
 class LogoSectionWidget extends StatelessWidget {
-  const LogoSectionWidget({super.key, required this.showShadow, required this.menuCallbacks,});
+  const LogoSectionWidget({super.key, required this.showShadow, required this.menuCallbacks, required this.selectedTitle,});
 
   final bool showShadow;
+  final String selectedTitle;
   final Map<String, VoidCallback> menuCallbacks;
 
   @override
@@ -96,7 +97,7 @@ class LogoSectionWidget extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-            color: AppColor.lightPrimaryColor,
+            color: title == selectedTitle ? AppColor.orangeYellowCrayola : AppColor.lightPrimaryColor,
             fontSize: DeviceSize.isLargeScreen ? 16 : 14,
             fontWeight: FontWeight.w500,
           ),

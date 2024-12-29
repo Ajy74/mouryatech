@@ -24,6 +24,7 @@ class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
   final GlobalKey _myProjectSectionKey = GlobalKey();
   final GlobalKey _contactMeSectionKey = GlobalKey();
   
+  int _currentIndex = 0;
   
   @override
   void initState() {
@@ -40,6 +41,58 @@ class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
 
   void _onScroll() {
     context.read<HomeCubit>().updateScrolling(_scrollController.offset <= 0);
+
+    final scrollOffset = _scrollController.offset;
+
+    // Get the context of each section
+    final infoSectionContext = _infoSectionKey.currentContext;
+    final aboutMeSectionContext = _aboutMeSectionKey.currentContext;
+    final myProjectSectionContext = _myProjectSectionKey.currentContext;
+    final contactMeSectionContext = _contactMeSectionKey.currentContext;
+
+    if (infoSectionContext != null) {
+      final infoBox = infoSectionContext.findRenderObject() as RenderBox;
+      final infoOffset = infoBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= infoOffset && scrollOffset < infoOffset + infoBox.size.height) {
+        _updateCurrentIndex(0);
+      }
+    }
+
+    if (aboutMeSectionContext != null) {
+      final aboutMeBox = aboutMeSectionContext.findRenderObject() as RenderBox;
+      final aboutMeOffset = aboutMeBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= aboutMeOffset && scrollOffset < aboutMeOffset + aboutMeBox.size.height) {
+        _updateCurrentIndex(1);
+      }
+    }
+
+    if (myProjectSectionContext != null) {
+      final projectBox = myProjectSectionContext.findRenderObject() as RenderBox;
+      final projectOffset = projectBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= projectOffset && scrollOffset < projectOffset + projectBox.size.height) {
+        _updateCurrentIndex(2);
+      }
+    }
+
+    if (contactMeSectionContext != null) {
+      final contactBox = contactMeSectionContext.findRenderObject() as RenderBox;
+      final contactOffset = contactBox.localToGlobal(Offset.zero).dy;
+
+      if (scrollOffset >= contactOffset) {
+        _updateCurrentIndex(3);
+      }
+    }
+  }
+
+  void _updateCurrentIndex(int newIndex) {
+    if (_currentIndex != newIndex) {
+      setState(() {
+        _currentIndex = newIndex;
+      });
+    }
   }
 
   void _scrollToSection(GlobalKey key) {
@@ -87,6 +140,7 @@ class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
                     "Projects": () => _scrollToSection(_myProjectSectionKey),
                     "Contact Me": () => _scrollToSection(_contactMeSectionKey),
                   },
+                  selectedTitle: getSelectedTitle(),
                 );
               }
               return LogoSectionWidget(
@@ -97,12 +151,28 @@ class _HomeLargeScreenWidgetState extends State<HomeLargeScreenWidget> {
                   "Projects": () => _scrollToSection(_myProjectSectionKey),
                   "Contact Me": () => _scrollToSection(_contactMeSectionKey),
                 },
+                selectedTitle: getSelectedTitle(),
               );
             }, 
           ),
         ),
       ],
     );
+  }
+  
+  getSelectedTitle() {
+    if(_currentIndex == 0){
+      return 'Home' ;
+    }
+    if(_currentIndex == 1){
+      return 'About Me' ;
+    }
+    if(_currentIndex == 2){
+      return 'Projects' ;
+    }
+    if(_currentIndex == 3){
+      return 'Contact Me' ;
+    }
   }
 
   // infoSection() {

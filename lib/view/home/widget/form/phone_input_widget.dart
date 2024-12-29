@@ -4,16 +4,16 @@ import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/device_size.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EmailInputField extends StatelessWidget {
+class PhoneInputField extends StatelessWidget {
   final FocusNode focusNode;
-  const EmailInputField({super.key, required this.focusNode});
+  const PhoneInputField({super.key, required this.focusNode});
 
   @override
   Widget build(BuildContext context) {
     final double size = DeviceSize.width ;
 
     return TextFormField(
-      controller: context.read<HomeCubit>().emailController,
+      controller: context.read<HomeCubit>().phoneController,
       focusNode: focusNode,
       cursorColor: AppColor.lightPrimaryColor,
       cursorWidth: 1,
@@ -26,7 +26,7 @@ class EmailInputField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(DeviceSize.isLargeScreen ? size*0.01 : size*0.02)),
         ),
         contentPadding: DeviceSize.isLargeScreen ? null : const EdgeInsets.fromLTRB(12, 6, 12, 6),
-        hintText: "Your Email",
+        hintText: "Contact Number (Optional)",
         hintStyle: TextStyle(
             color: AppColor.lightSecondaryColor,
             fontWeight: FontWeight.w400,
@@ -37,7 +37,7 @@ class EmailInputField extends StatelessWidget {
           color: AppColor.lightPrimaryColor,
           fontSize: DeviceSize.isLargeScreen ? 20 : null
       ),
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.number,
       minLines: 1,
       maxLines: 1,
       onChanged: (value) {

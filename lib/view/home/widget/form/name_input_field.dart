@@ -26,7 +26,7 @@ class NameInputField extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(DeviceSize.isLargeScreen ? size*0.01 : size*0.02)),
         ),
         contentPadding: DeviceSize.isLargeScreen ? null : const EdgeInsets.fromLTRB(12, 6, 12, 6),
-        hintText: "Enter your name",
+        hintText: "Your Name",
         hintStyle: TextStyle(
             color: AppColor.lightSecondaryColor,
             fontWeight: FontWeight.w400,
