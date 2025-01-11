@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +7,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mourytech/configs/colors/colors.dart';
 import 'package:mourytech/utils/components/custom_button.dart';
+import 'package:mourytech/utils/constant/app_constant.dart';
 import 'package:mourytech/utils/device_size.dart';
 import 'package:mourytech/view/widget/floating_up_down_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InfoSectionWidget extends StatelessWidget {
   const InfoSectionWidget({super.key});
@@ -181,7 +185,13 @@ class InfoSectionWidget extends StatelessWidget {
                 width: DeviceSize.isLargeScreen ? DeviceSize.width*0.12 :DeviceSize.width*0.32,
                 radius: DeviceSize.isLargeScreen ? (DeviceSize.height*0.07)/2 :(DeviceSize.height*0.055)/2,
                 textSize: DeviceSize.isLargeScreen ? DeviceSize.width*0.012 :DeviceSize.width*0.034,
-                onPress: (){}
+                onPress: () async{
+                  if( await canLaunchUrl(Uri.parse(resumeDownloadUrl)) ){
+                    await launchUrl(Uri.parse(resumeDownloadUrl));
+                  }else{
+                    log("Something went wrong in launching resume url");
+                  }
+                }
               ),
 
               SizedBox(width: DeviceSize.isLargeScreen ? DeviceSize.width*0.03 :DeviceSize.width*0.025,),
